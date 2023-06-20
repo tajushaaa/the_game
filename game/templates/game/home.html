@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dice Game</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#num_dice').change(function() {
+                var numDice = $(this).val();
+                var sidesContainer = $('#sides-container');
+                sidesContainer.empty();
+                for (var i = 1; i <= numDice; i++) {
+                    sidesContainer.append('<label for="sides_' + i + '">Number of sides for dice ' + i + ' (1-100):</label>');
+                    sidesContainer.append('<input type="number" id="sides_' + i + '" name="sides_' + i + '" min="1" max="100" required><br><br>');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Dice Game</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="num_dice">Number of dice (1-5):</label>
+        <input type="number" id="num_dice" name="num_dice" min="1" max="5" required><br><br>
+        <div id="sides-container"></div>
+        <input type="submit" value="Roll Dice">
+    </form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dice Game - History</title>
+</head>
+<body>
+    <h1>Dice Game - History</h1>
+    {% if history %}
+        <table>
+            <tr>
+                <th>Roll</th>
+                <th>Sum</th>
+            </tr>
+            {% for rolls in history %}
+                <tr>
+                    {% for roll in rolls %}
+                        <td>{{ roll }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <form method="post" action="{% url 'roll_again' %}">
+            {% csrf_token %}
+            <input type="hidden" name="num_dice" value="{{ history.0|length }}">
+            {% for i in range(history.0|length) %}
+                <input type="hidden" name="sides_{{ i }}" value="{{ history.0.i }}">
+            {% endfor %}
+            <input type="submit" value="Roll Once More">
+        </form>
+        <form method="post" action="{% url 'clear_history' %}">
+            {% csrf_token %}
+            <input type="submit" value="Clear History">
+        </form>
+    {% else %}
+        <p>No rolls yet.</p>
+    {% endif %}
+    <a href="/">Go back</a>
+</body>
+</html>
